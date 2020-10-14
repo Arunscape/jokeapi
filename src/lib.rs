@@ -1,9 +1,12 @@
+#![warn(clippy::all)]
+
 extern crate cfg_if;
 extern crate wasm_bindgen;
 
 mod utils;
 
 use cfg_if::cfg_if;
+use rand::{seq::SliceRandom, thread_rng};
 use wasm_bindgen::prelude::*;
 
 cfg_if! {
@@ -18,5 +21,7 @@ cfg_if! {
 
 #[wasm_bindgen]
 pub fn greet() -> String {
-    "Hello, wasm-worker!".to_string()
+    let jokes = include!("../jokes.txt");
+
+    jokes.choose(&mut thread_rng()).unwrap().to_owned().into()
 }

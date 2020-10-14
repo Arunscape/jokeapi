@@ -14,7 +14,6 @@ default = ["console_error_panic_hook"]
 cfg-if = "0.1.2"
 wasm-bindgen = "=0.2.65"
 serde = { version = "*", features = ["derive"] }
-bincode = "*"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires
@@ -26,6 +25,7 @@ console_error_panic_hook = { version = "0.1.1", optional = true }
 # compared to the default allocator's ~10K. It is slower than the default
 # allocator, however.
 wee_alloc = { version = "0.4.2", optional = true }
+rand = { version = "*", features = ["wasm-bindgen"] }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.2"
@@ -37,5 +37,6 @@ opt-level = "s"
 [build-dependencies]
 reqwest = { version = "*", features = ["json"] }
 tokio = { version = "*", features = ["full"] }
-bincode = "*"
+# bincode = "*"
+codegen = "*"
 

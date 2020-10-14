@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::OpenOptions;
 use std::io::Write;
 
 #[tokio::main]
@@ -7,15 +7,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "https://raw.githubusercontent.com/sameerkumar18/geek-joke-api/master/data.json",
     )
     .await?
-    .json::<Vec<String>>()
+    .text()
     .await?;
-    println!("{:#?}", resp);
+    //println!("{:#?}", resp);
 
-    let mut file = File::create("jokes.bin")?;
+    let mut file = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .open("jokes.txt")?;
 
-    let resp = bincode::serialize(&resp)?;
-
-    file.write_all(&resp)?;
+    file.write_all(resp.as_bytes())?;
 
     Ok(())
 }
